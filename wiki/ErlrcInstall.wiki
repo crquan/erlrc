@@ -16,8 +16,7 @@ Prerequisites:
   1. gnu make
   1. working erlang installation.
      * debian: aptitude install erlang-dev
-     * os/x (with [http://www.finkproject.org/ fink]): apt-get install erlang-ot
-p
+     * os/x (with [http://www.finkproject.org/ fink]): apt-get install erlang-otp
      * freebsd: pkg_add -r erlang
      * others: ???
   1. [http://support.process-one.net/doc/display/CONTRIBS/EUnit eunit] from proc
