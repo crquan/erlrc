@@ -1,0 +1,96 @@
+﻿#summary Install howto for erlrc
+#labels Phase-Deploy
+
+= Introduction =
+
+This page will assist you in installing erlrc.
+
+= The Easy Way =
+
+If you are running a debian package based system (Debian, Ubuntu, [http://www.finkproject.org/ Mac OS/X with fink], etc.), just go to the 
+[http://code.google.com/p/erlrc/downloads/list?can=2&q=*.deb&colspec=Filename+Summary+Uploaded+Size+DownloadCount downloads section] and grab the latest {{{.deb}}} files.
+
+= The Less Easy Way =
+
+Prerequisites:
+  1. gnu make
+  1. working erlang installation.
+     * debian: aptitude install erlang-dev
+     * os/x (with [http://www.finkproject.org/ fink]): apt-get install erlang-ot
+p
+     * freebsd: pkg_add -r erlang
+     * others: ???
+  1. [http://support.process-one.net/doc/display/CONTRIBS/EUnit eunit] from proc
+ess one; optional but 'make check' will not do anything without it.
+
+If you are not running a debian based system, or you just like to kick the tires, 
+go to the [http://code.google.com/p/erlrc/downloads/list?can=2&q=*.tar.gz&colspec=Filename+Summary+Uploaded+Size+DownloadCount downloads section] and grab the latest {{{.tar.gz}}} file.
+
+{{{
+# tar -zxf erlrc-0.1.14.tar.gz
+# cd erlrc-0.1.14
+# ./bootstrap && ./build --prefix=/usr/local && make -s check
+...
+}}}
+The default prefix is {{{/usr}}} so if you are ok with that you can omit the prefix argument.  Hopefully what you see[[#1 1]] is something like
+{{{
+PASS: ok-boot-test-0
+PASS: ok-boot-test-1
+PASS: ok-boot-test-circular-1
+PASS: ok-boot-test-circular-2
+PASS: ok-boot-test-dependency-included
+PASS: ok-boot-test-duplicate-included
+PASS: ok-boot-test-nested-include
+96% of 84 lines covered in ./erlrc.COVER.out
+PASS: module-erlrc
+94% of 1497 lines covered in ./erlrcdynamic.COVER.out
+PASS: module-erlrcdynamic
+PASS: test-start
+PASS: test-stop
+PASS: test-downgrade
+PASS: test-upgrade
+===================
+All 13 tests passed
+===================
+}}}
+If not, the test output for {{{test-FOO}}} is in {{{tests/test-FOO.out}}}; perhaps it is informative.
+
+Now you can either {{{make install}}} to just stick stuff on your system, or you can build your own debian package if you are on a debian based system. To do the latter type
+{{{
+# env FW_DUPLOAD_ARGS="-no" make release
+...
+}}}
+which should run the tests again and ultimately produce a {{{.deb}}} in {{{fw-pkgout/}}} in the root directory of the project which you can install.[[#2 2]]
+{{{
+# ls fw-pkgout/
+erlrc-build_0.1.14_i386.deb  erlrc_0.1.14_all.deb
+# sudo dpkg -i fw-pkgout/erlrc_0.1.14_all.deb 
+Selecting previously deselected package erlrc.
+(Reading database ... 17065 files and directories currently installed.)
+Unpacking erlrc (from .../erlrc_0.1.14_all.deb) ...
+Setting up erlrc (0.1.14) ...
+
+#
+}}}
+
+That's it.
+
+= Footnotes =
+
+== 1 ==
+If you see something like:
+{{{
+fw requires GNU make to build, you are using bsd make
+*** Error code 1
+
+Stop.
+}}}
+Then you are using bsd make which will not work.  Try again with gnu make, e.g.,
+{{{
+# ./bootstrap && ./build --prefix=/usr/local && gmake -s check
+}}}
+
+== 2 ==
+You might see some errors here if dupload is not installed.  Framewerk wants to upload the package it makes to a repository and I'm assuming you don't have one, hence the FW_DUPLOAD_ARGS="-no" (in case you do have dupload installed, this causes it to do a dry run).
+
+If you have dupload installed and your own repository than you can set FW_DUPLOAD_ARGS as desired.  For your own projects you can even hard code this in.  Check out {{{fw-pkgin/config}}} if you are interested.
