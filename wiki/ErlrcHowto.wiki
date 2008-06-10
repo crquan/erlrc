@@ -1,0 +1,15 @@
+#summary An explanation of erlrc
+
+= Introduction =
+
+One of Erlang's strengths is hot code loading, the ability to change the software on the system without interrupting service.  For internet applications this is especially powerful.
+
+Hot code loading in Erlang consists of low-level language support, and a high-level strategy of [http://linux.die.net/man/3/release_handler release handling] embodied in the OTP libraries.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
