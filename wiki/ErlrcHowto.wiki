@@ -78,11 +78,11 @@ Here's a table of the shell scripts, their corresponding methods in erlrcdynamic
 
 If you use [http://code.google.com/p/fwtemplates framewerk] package hooks are created for you automatically by [http://code.google.com/p/fwtemplates/wiki/FwTemplateErlangWalkthrough fw-template-erlang], and these hooks are inert unless erlrc is installed (which is automatically listed as a recommended package).
 
-For everyone else, here are some examples of what your package hooks should look like, extracted from a package we made called zfile (so change the name to your application).
+For everyone else, here are some examples of what your package hooks should look like:
 
-  * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst
-  * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm
-  * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm
+  * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst example.postinst]
+  * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
+  * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
 
 = Footnotes =
 
