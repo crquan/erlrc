@@ -68,7 +68,10 @@ cb8eec1a1b85ec017517d3e51c5aee7b
 }}}
 We use md5sums to generate node names at our company, hence the funny node name.[[#3 3]]  
 
-...
+Here's a table of the shell scripts, their corresponding methods in erlrcdynamic, a brief description of what they do, and what phase in the debian package installation
+
+|| shell script || erlrcdynamic method || what || when ||
+|| erlrc-start || start || starts a ... || ... |||
 
 = Footnotes =
 
