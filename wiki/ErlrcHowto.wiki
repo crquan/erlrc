@@ -32,7 +32,9 @@ dpkg: ... it looks like that went OK.
 Setting up egerl (4.1.0) ...
 erlrc-start: Starting 'egerl': (cb8eec1a1b85ec017517d3e51c5aee7b) already_running
 }}}
-Basically, on the running Erlang node on my machine, the Erlang application egerl was hot-code upgraded from 4.0.1 to 4.1.0 when the package was installed.  If this were an initial install, it would have started the application instead. 
+Basically, on the running Erlang node on my machine, the Erlang application egerl was hot-code upgraded from 4.0.1 to 4.1.0 when the package was installed.  If this were an initial install, it would have started the application instead.  
+
+The OS package manager takes care of dependencies and you end up managing Erlang the way you manage everything else.[[#1 1]] 
 
 = Details =
 
@@ -40,3 +42,9 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
+
+= Footnotes =
+
+== 1 ==
+
+If you have circular dependencies then you will have transients in your system when things aren't working while the installs happen.  We think (but are not sure) that the release handler has problems too, since the low-level primitives can only atomically upgrade one module at a time.  However maybe we're wrong about that.  In practice, we haven't have circular dependencies.
