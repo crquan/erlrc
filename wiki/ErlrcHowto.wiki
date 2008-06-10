@@ -76,6 +76,11 @@ Here's a table of the shell scripts, their corresponding methods in erlrcdynamic
 || erlrc-upgrade || upgrade || upgrades an application || _postinst_ upgrade ||  
 || erlrc-downgrade || downgrade || downgrades an application || _postinst_ abort_upgrade ||
 
+If you use [http://code.google.com/p/fwtemplates framewerk] package hooks are created for you automatically by [http://code.google.com/p/fwtemplates/wiki/FwTemplateErlangWalkthrough fw-template-erlang], and these hooks are inert unless erlrc is installed (which is automatically listed as a recommended package).
+
+For everyone else, here are some examples of what your package hooks should look like, extracted from a package we made called zfile (so change the name to your application).
+
+
 = Footnotes =
 
 == 1 ==
