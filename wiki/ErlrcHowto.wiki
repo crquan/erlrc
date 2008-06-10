@@ -51,6 +51,10 @@ ec2nodefinder    erlsom  gencron      n54etsbugfix  virtuerl
 }}}
 By default $ERLRC_ROOT is /etc/erlrc.d .
 
+You can of course start stuff in your boot script as well if you like, erlrc won't start something that's already started.  In practice we use the vanilla boot scripts and pass {{{-s erlrc_boot boot}}} to the erl command line.
+
+Oh, everything works with included applications as well.  By "everything works", we mean that erlrc will look at the set of applications to start, will note any application {{{X}}} that includes another application {{{Y}}}, and will consider the requirement to start {{{Y}}} as being satisfied by starting {{{X}}}, and will only start {{{X}}}.
+
 = Details =
 
 Add your content here.  Format your content with:
