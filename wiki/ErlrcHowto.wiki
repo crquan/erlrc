@@ -71,8 +71,10 @@ We use md5sums to generate node names at our company, hence the funny node name.
 Here's a table of the shell scripts, their corresponding methods in erlrcdynamic, a brief description of what they do, and what phase in the [http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html debian package installation procedure] it should be invoked.[[#4 4]]
 
 || shell script || erlrcdynamic method || what || when (debian) ||
-|| erlrc-start || start || starts an application (idempotent) || _postinst_ configure ||
+|| erlrc-start || start || starts an application (idempotent) || _postinst_ configure ; _postinst_ abort-remove ||
 || erlrc-stop || stop || stops an application (idempotent) || _prerm_ remove ||
+|| erlrc-upgrade || upgrade || upgrades an application || _postinst_ upgrade ||  
+|| erlrc-downgrade || downgrade || downgrades an application || _postinst_ abort_upgrade ||
 
 = Footnotes =
 
