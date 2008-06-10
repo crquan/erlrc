@@ -12,7 +12,8 @@ pmineiro@ub32srvvmw-199% sudo apt-get install egerl
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
-The following packages will be upgraded:  egerl
+The following packages will be upgraded:
+  egerl
 1 upgraded, 0 newly installed, 0 to remove and 34 not upgraded.
 Need to get 0B/113kB of archives.
 After unpacking 0B of additional disk space will be used.
