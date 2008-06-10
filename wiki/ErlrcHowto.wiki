@@ -42,7 +42,7 @@ Erlrc consists of two pieces, an upgrade piece, and a boot piece.
 
 Erlang uses a [http://www.erlang.org/doc/design_principles/release_structure.html#boot boot script] to decide what to do when starting up.  The situation is analogous to http servers such as Apache which, when first designed, used a single file for configuration.  This is a natural approach which unfortunately complicates package managed operating systems, since different packages have to manipulate the same file.  As with Apache, our solution involves controlling the boot process from a directory.  
 
-$ERLRC_ROOT/applications contains a list of applications that should be run at boot time.  [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrc_boot.erl erlrc_boot] sorts these applications in dependency order and then starts them.
+$ERLRC_ROOT/applications contains a list of applications that should be run at boot time.  [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrc_boot.erl erlrc_boot] sorts these applications in dependency order and then starts them.[[#2 2]]
 {{{
 % ls /etc/erlrc.d/applications
 appinspect       egerl   fragmentron  genherd       nodefinder    zfile
@@ -66,7 +66,7 @@ These shell scripts look at $ERLRC_ROOT/nodes for a list of nodes to manage; the
 % ls /etc/erlrc.d/nodes
 cb8eec1a1b85ec017517d3e51c5aee7b
 }}}
-We use md5sums to generate node names at our company, hence the funny node name.[[#2 2]]  
+We use md5sums to generate node names at our company, hence the funny node name.[[#3 3]]  
 
 ...
 
@@ -77,5 +77,9 @@ We use md5sums to generate node names at our company, hence the funny node name.
 If you have circular dependencies then you will have transients in your system when things aren't working while the installs happen.  We think (but are not sure) that the release handler has problems too, since the low-level primitives can only atomically upgrade one module at a time.  However maybe we're wrong about that.  In practice, we haven't have circular dependencies.
 
 == 2 ==
+
+There are two concepts of dependency here.  The first is an OS package manager dependency, the second is the OTP application specification dependency.  erlrcdynamic uses the former (implicitly, since it gets invoked by the OS package manager), and erlrc_boot uses the latter.  You have to arrange for both types of dependencies to be correct.
+
+== 3 ==
 
 I'm not going to show you the cookie :)
