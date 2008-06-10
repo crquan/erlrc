@@ -82,4 +82,4 @@ There are two concepts of dependency here.  The first is an OS package manager d
 
 == 3 ==
 
-I'm not going to show you the cookie :)
+I'm not going to show you the cookie, but it's basically {{{ cat /etc/erlrc.d/nodes/cb8eec1a1b85ec017517d3e51c5aee7b }}}.
