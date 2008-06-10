@@ -4,7 +4,7 @@
 
 One of Erlang's strengths is hot code loading, the ability to change the software on the system without interrupting service.  For internet applications this is especially powerful.
 
-Hot code loading in Erlang consists of low-level language support, and a high-level strategy of [http://linux.die.net/man/3/release_handler release handling] embodied in the OTP libraries.
+Hot code loading in Erlang consists of low-level language support, and a high-level strategy of [http://www.erlang.org/doc/design_principles/release_structure.html release handling] embodied in the OTP libraries.
 
 erlrc embodies another high level strategy for using the low-level capabilities of Erlang for hot code loading.  Unlike release handling it is designed to be incremental and integrated into the OS package management.  The goal are experiences like this:
 {{{
@@ -32,9 +32,24 @@ dpkg: ... it looks like that went OK.
 Setting up egerl (4.1.0) ...
 erlrc-start: Starting 'egerl': (cb8eec1a1b85ec017517d3e51c5aee7b) already_running
 }}}
-Basically, on the running Erlang node on my machine, the Erlang application egerl was hot-code upgraded from 4.0.1 to 4.1.0 when the package was installed.  If this were an initial install, it would have started the application instead.  
+Basically, on the running Erlang node on my machine, the Erlang application egerl was hot-code upgraded from 4.0.1 to 4.1.0 when the package was installed.  If this were an initial install, it would have started the application instead.  The OS package manager takes care of dependencies and you end up managing Erlang the way you manage everything else.[[#1 1]] 
 
-The OS package manager takes care of dependencies and you end up managing Erlang the way you manage everything else.[[#1 1]] 
+= Design =
+
+Erlrc consists of two pieces, an upgrade piece, and a boot piece.
+
+== Boot ==
+
+Erlang uses a [http://www.erlang.org/doc/design_principles/release_structure.html#boot boot script] to decide what to do when starting up.  The situation is analogous to http servers such as Apache which, when first designed, used a single file for configuration.  This is a natural approach which unfortunately complicates package managed operating systems, since different packages have to manipulate the same file.  As with Apache, our solution involves controlling the boot process from a directory.  
+
+$ERLRC_ROOT/applications contains a list of applications that should be run at boot time.  erlrc sorts these applications in dependency order and then starts them.
+{{{
+% ls /etc/erlrc.d/applications
+appinspect       egerl   fragmentron  genherd       nodefinder    zfile
+combonodefinder  erlrc   fuserl       loggins       schemafinder
+ec2nodefinder    erlsom  gencron      n54etsbugfix  virtuerl
+}}}
+By default $ERLRC_ROOT is /etc/erlrc.d .
 
 = Details =
 
