@@ -78,6 +78,11 @@ For everyone else, here are some examples of what your package hooks should look
   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
 
+Finally, a note on included applications.  erlrc tries to "do the right thing" with included applications.  This is interpreted as:
+
+  * if an application is listed in the $ERLRC_ROOT/applications directory, then it should be running.
+  * if an application {{{X}}} is included by application {{{Y}}}, then starting {{{Y}}} counts as starting {{{X}}}.
+
 = Footnotes =
 
 == 1 ==
