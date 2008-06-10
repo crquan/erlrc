@@ -6,7 +6,7 @@ One of Erlang's strengths is hot code loading, the ability to change the softwar
 
 Hot code loading in Erlang consists of low-level language support, and a high-level strategy of [http://www.erlang.org/doc/design_principles/release_structure.html release handling] embodied in the OTP libraries.
 
-erlrc embodies another high level strategy for using the low-level capabilities of Erlang for hot code loading.  Unlike release handling it is designed to be incremental and integrated into the OS package management.  The goal are experiences like this:
+erlrc embodies another high level strategy for using the low-level capabilities of Erlang for hot code loading.  Unlike release handling it is designed to be incremental and integrated into the OS package management.  The goal is an experience like this:
 {{{
 pmineiro@ub32srvvmw-199% sudo apt-get install egerl
 Reading package lists... Done
@@ -42,7 +42,7 @@ Erlrc consists of two pieces, an upgrade piece, and a boot piece.
 
 Erlang uses a [http://www.erlang.org/doc/design_principles/release_structure.html#boot boot script] to decide what to do when starting up.  The situation is analogous to http servers such as Apache which, when first designed, used a single file for configuration.  This is a natural approach which unfortunately complicates package managed operating systems, since different packages have to manipulate the same file.  As with Apache, our solution involves controlling the boot process from a directory.  
 
-$ERLRC_ROOT/applications contains a list of applications that should be run at boot time.  erlrc sorts these applications in dependency order and then starts them.
+$ERLRC_ROOT/applications contains a list of applications that should be run at boot time.  [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrc_boot.erl erlrc_boot] sorts these applications in dependency order and then starts them.
 {{{
 % ls /etc/erlrc.d/applications
 appinspect       egerl   fragmentron  genherd       nodefinder    zfile
