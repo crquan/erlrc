@@ -6,6 +6,32 @@ One of Erlang's strengths is hot code loading, the ability to change the softwar
 
 Hot code loading in Erlang consists of low-level language support, and a high-level strategy of [http://linux.die.net/man/3/release_handler release handling] embodied in the OTP libraries.
 
+erlrc embodies another high level strategy for using the low-level capabilities of Erlang for hot code loading.  Unlike release handling it is designed to be incremental and integrated into the OS package management.  The goal are experiences like this:
+{{{
+pmineiro@ub32srvvmw-199% sudo apt-get install egerl
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages will be upgraded:  egerl
+1 upgraded, 0 newly installed, 0 to remove and 34 not upgraded.
+Need to get 0B/113kB of archives.
+After unpacking 0B of additional disk space will be used.
+WARNING: The following packages cannot be authenticated!  egerl
+Install these packages without verification [y/N]? y
+(Reading database ... 48221 files and directories currently installed.)
+Preparing to replace egerl 4.0.1 (using .../archives/egerl_4.1.0_all.deb) ...
+dpkg: warning - old pre-removal script returned error exit status 1
+dpkg - trying script from the new package instead ...
+dpkg: ... it looks like that went OK.
+Unpacking replacement egerl ...
+dpkg: warning - old post-removal script returned error exit status 1
+dpkg - trying script from the new package instead ...
+erlrc-upgrade: Upgrading 'egerl': (cb8eec1a1b85ec017517d3e51c5aee7b) upgraded
+dpkg: ... it looks like that went OK.
+Setting up egerl (4.1.0) ...
+erlrc-start: Starting 'egerl': (cb8eec1a1b85ec017517d3e51c5aee7b) already_running
+}}}
+Basically, on the running Erlang node on my machine, the Erlang application egerl was hot-code upgraded from 4.0.1 to 4.1.0 when the package was installed.  If this were an initial install, it would have started the application instead. 
 
 = Details =
 
