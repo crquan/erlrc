@@ -68,12 +68,7 @@ cb8eec1a1b85ec017517d3e51c5aee7b
 }}}
 We use md5sums to generate node names at our company, hence the funny node name.[[#2 2]]  
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+...
 
 = Footnotes =
 
