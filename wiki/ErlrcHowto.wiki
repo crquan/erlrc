@@ -57,7 +57,14 @@ Oh, everything works with included applications as well.  By "everything works",
 
 == Package Installation ==
 
-For package installation time, shell scripts are provided which are designed to be run from the packaging system's hooks.  These shell scripts ultimately invoke methods from [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrcdynamic.erl erlrcdynamic], which contains methods for starting, stopping, upgrading, and downgrading individual OTP applications.
+For package installation time, shell scripts are provided which are designed to be run from the packaging system's hooks.  These shell scripts ultimately invoke methods from [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrcdynamic.erl erlrcdynamic], which contains methods for starting, stopping, upgrading, and downgrading individual OTP applications.  
+
+These shell scripts look at $ERLRC_ROOT/nodes for a list of nodes to manage; the filenames are the node names (on the localhost) and the file contents are the node cookie.  
+{{{
+% ls /etc/erlrc.d/nodes
+cb8eec1a1b85ec017517d3e51c5aee7b
+}}}
+We use md5sums to generate node names at our company, hence the funny node name.[[#2 2]]  
 
 = Details =
 
@@ -71,3 +78,7 @@ Add your content here.  Format your content with:
 == 1 ==
 
 If you have circular dependencies then you will have transients in your system when things aren't working while the installs happen.  We think (but are not sure) that the release handler has problems too, since the low-level primitives can only atomically upgrade one module at a time.  However maybe we're wrong about that.  In practice, we haven't have circular dependencies.
+
+== 2 ==
+
+I'm not going to show you the cookie :)
