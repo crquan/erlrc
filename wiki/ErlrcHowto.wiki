@@ -68,10 +68,11 @@ cb8eec1a1b85ec017517d3e51c5aee7b
 }}}
 We use md5sums to generate node names at our company, hence the funny node name.[[#3 3]]  
 
-Here's a table of the shell scripts, their corresponding methods in erlrcdynamic, a brief description of what they do, and what phase in the debian package installation
+Here's a table of the shell scripts, their corresponding methods in erlrcdynamic, a brief description of what they do, and what phase in the [http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html debian package installation procedure] it should be invoked.[[#4 4]]
 
-|| shell script || erlrcdynamic method || what || when ||
-|| erlrc-start || start || starts a ... || ... |||
+|| shell script || erlrcdynamic method || what || when (debian) ||
+|| erlrc-start || start || starts an application (idempotent) || _postinst_ configure ||
+|| erlrc-stop || stop || stops an application (idempotent) || _prerm_ remove ||
 
 = Footnotes =
 
@@ -86,3 +87,7 @@ There are two concepts of dependency here.  The first is an OS package manager d
 == 3 ==
 
 I'm not going to show you the cookie, but it's basically {{{ cookie=`cat /etc/erlrc.d/nodes/cb8eec1a1b85ec017517d3e51c5aee7b` }}}.
+
+== 4 ==
+
+Adjust as appropriate for your OS package manager if not using a dpkg-based system.
