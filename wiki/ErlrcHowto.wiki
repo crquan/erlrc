@@ -55,6 +55,8 @@ You can of course start stuff in your boot script as well if you like, erlrc won
 
 Oh, everything works with included applications as well.  By "everything works", we mean that erlrc will look at the set of applications to start, will note any application {{{X}}} that includes another application {{{Y}}}, and will consider the requirement to start {{{Y}}} as being satisfied by starting {{{X}}}, and will only start {{{X}}}.
 
+In practice, then, any package which provides an OTP application should place a file in $ERLRC_ROOT/applications/ to ensure that it gets started up at (Erlang) boot time.  The contents of this file are not examined by erlrc.
+
 == Package Installation ==
 
 For package installation time, shell scripts are provided which are designed to be run from the packaging system's hooks.  These shell scripts ultimately invoke methods from [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrcdynamic.erl erlrcdynamic], which contains methods for starting, stopping, upgrading, and downgrading individual OTP applications.  
