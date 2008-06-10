@@ -57,7 +57,7 @@ Oh, everything works with included applications as well.  By "everything works",
 
 == Package Installation ==
 
-For package installation time, shell scripts are provided which are designed to be run from the packaging system's hooks.  These shell scripts ultimately invoke methods from [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrc_dynamic.erl erlrc_dynamic], which contains methods for starting, stopping, upgrading, and downgrading individual OTP applications.
+For package installation time, shell scripts are provided which are designed to be run from the packaging system's hooks.  These shell scripts ultimately invoke methods from [http://code.google.com/p/erlrc/source/browse/trunk/src/erlrcdynamic.erl erlrcdynamic], which contains methods for starting, stopping, upgrading, and downgrading individual OTP applications.
 
 = Details =
 
