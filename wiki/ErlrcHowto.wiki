@@ -80,6 +80,9 @@ If you use [http://code.google.com/p/fwtemplates framewerk] package hooks are cr
 
 For everyone else, here are some examples of what your package hooks should look like, extracted from a package we made called zfile (so change the name to your application).
 
+  * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst
+  * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm
+  * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm
 
 = Footnotes =
 
