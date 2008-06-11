@@ -47,7 +47,7 @@ By default $ERLRC_ROOT is /etc/erlrc.d .
 
 You can of course start stuff in your boot script as well if you like, erlrc won't start something that's already started.  In practice we use the vanilla boot scripts and pass {{{-s erlrc_boot boot}}} to the erl command line.
 
-Oh, everything works with included applications as well.  By "everything works", we mean that erlrc will look at the set of applications to start, will note any application {{{X}}} that includes another application {{{Y}}}, and will consider the requirement to start {{{Y}}} as being satisfied by starting {{{X}}}, and will only start {{{X}}}.
+Oh, everything works with [http://www.erlang.org/doc/design_principles/included_applications.html included applications] as well.  By "everything works", we mean that erlrc will look at the set of applications to start, will note any application {{{Y}}} that includes another application {{{X}}}, and will consider the requirement to start {{{X}}} as being satisfied by starting {{{Y}}}, and will only start {{{Y}}}.
 
 In practice, then, any package which provides an OTP application should place a file in $ERLRC_ROOT/applications/ to ensure that it gets started up at (Erlang) boot time.  The filename indicates the name of the application to start, and the contents of this file are not examined by erlrc.  If you use [http://code.google.com/p/fwtemplates framewerk] this is done for you automatically by [http://code.google.com/p/fwtemplates/wiki/FwTemplateErlangWalkthrough fw-template-erlang]. 
 
@@ -78,17 +78,20 @@ For everyone else, here are some examples of what your package hooks should look
   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
 
-Finally, a note on included applications.  erlrc tries to "do the right thing" with included applications.  This is interpreted as:
+Finally, a note on [http://www.erlang.org/doc/design_principles/included_applications.html included applications].  erlrc tries to "do the right thing" with included applications.  This is interpreted as:
 
   1. if an application is listed in the $ERLRC_ROOT/applications directory, then it should be running.
   1. when an application is running, all of its included applications are considered running.
   1. an application cannot both run itself and be included.
 
-Therefore:
+Therefore, for applications {{{X}}} and {{{Y}}} both listed in $ERLRC_ROOT/applications:
  
-  * if an application {{{X}}} is included by application {{{Y}}}, then starting {{{Y}}} counts as starting {{{X}}}.
-  * if an application {{{Y}}} is upgraded or downgraded such that {{{X}}} becomes included when it was not previously, {{{X}}} is stopped.
-  * if an application {{{Y}}} is upgraded or downgraded such that {{{X}}} becomes no longer included when it was previously, {{{X}}} is started.
+  * if {{{X}}} is included by {{{Y}}}, then before starting {{{Y}}}, {{{X}}} is stopped.
+  * if {{{X}}} is included by {{{Y}}}, then after stopping {{{Y}}}, {{{X}}} is started.
+  * if {{{Y}}} is upgraded or downgraded such that {{{X}}} becomes included when it was not previously, before {{{Y}}} is upgraded or downgraded, {{{X}}} is stopped.
+  * if {{{Y}}} is upgraded or downgraded such that {{{X}}} becomes no longer included when it was previously, after {{{Y}}} is upgraded or downgraded, {{{X}}} is started.
+
+We've found these rules work for us in the few cases we've used included applications.
 
 = Footnotes =
 
