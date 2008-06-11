@@ -35,10 +35,17 @@ If you want your packages to start leveraging erlrc, then:
  1. Install erlrc into your system.
  1. Ensure that $ERLRC_ROOT/nodes contains a file with your node name and cookie in it.
  1. Start your erlang nodes with the command line flag {{{-s erlrc_boot boot}}}.
- 1. Add postrm, postinst, and prerm hooks to your debian packages following the examples:
+
+Now your Erlang runtime is ready.  For your packages either:
+ 1. Use [http://code.google.com/p/fwtemplates/wiki/FwTemplateErlangWalkthrough fw-template-erlang], *or*
+ 1. For debian:
+   1. Add an empty file named the same as your application installed into $ERLRC_ROOT/applications .
+   1. Add postrm, postinst, and prerm hooks to your debian packages following the examples:
    * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst example.postinst]
    * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
    * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
+ 1. For others (RPM, etc.)
+   1. You'll have to adapt the debian examples.  If you come up with something, let me know and I'll add it here.
 
 = Design =
 
