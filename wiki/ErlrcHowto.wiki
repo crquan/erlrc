@@ -36,9 +36,9 @@ If you want your packages to start leveraging erlrc, then:
  1. Ensure that $ERLRC_ROOT/nodes contains a file with your node name and cookie in it.
  1. Start your erlang nodes with the command line flag {{{-s erlrc_boot boot}}}.
  1. Add postrm, postinst, and prerm hooks to your debian packages following the examples:
-   * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst
-   * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm
-   * http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm
+   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst example.postinst]
+   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
+   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
 
 = Design =
 
