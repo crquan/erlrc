@@ -117,7 +117,9 @@ Very similar to upgrade, except the treatment of included applications is revers
 
 == Automatic .appup file generation ==
 
-You can use erlrcdynamic with [http://www.erlang.org/doc/man/appup.html appup files] you have generated yourself.  However we quickly noticed that in most cases appup files could be automatically generating by inspecting the source at upgrade (downgrade) time.  We therefore included automation of most of the common cases outlined in the [http://www.erlang.org/doc/design_principles/appup_cookbook.html appup cookbook].
+You can use erlrcdynamic with [http://www.erlang.org/doc/man/appup.html appup files] you have generated yourself.  However we quickly noticed that in most cases appup files could be automatically generating by inspecting the source at upgrade (downgrade) time.  We therefore included automation of most of the common cases outlined in the [http://www.erlang.org/doc/design_principles/appup_cookbook.html appup cookbook].  
+
+The automatic scheme does not cover all possible scenarios, but since developing this automatic appup file generation code, we have not had to write a single appup file manually.
 
 Here's an outline of the logic followed for generating the upgrade portion of the appup file.  It should be noted that this logic is executed at the point in the package installation process where both the old and new code are installed on disk, so that both can be inspected.
 
@@ -137,9 +139,11 @@ The logic for computing the downgrade portion of the appup file is similar but r
 
 == Speciality Hooks ==
 
+We added some special hooks to make automatic appup file generation more comprehensive. 
+
 === sup_upgrade_notify/2 ===
 
-We added some special hooks to make automatic appup file generation more comprehensive.  The first is a sup_upgrade_notify/2 hook.  If you export such a function in your supervisor modules, it will be called whenever the supervisor is upgraded, with the arguments OldVsn (old version) and NewVsn (new version).  You can use this to start or stop any added or removed children from the supervisor, since (as indicated in the appup cookbook) the supervisor upgrade instruction does not start or stop children.  Note your supervisor will have to be a registered process for this hook to be useful.
+ The first is a sup_upgrade_notify/2 hook.  If you export such a function in your supervisor modules, it will be called whenever the supervisor is upgraded, with the arguments OldVsn (old version) and NewVsn (new version).  You can use this to start or stop any added or removed children from the supervisor, since (as indicated in the appup cookbook) the supervisor upgrade instruction does not start or stop children.  Note your supervisor will have to be a registered process for this hook to be useful.
 
 = Footnotes =
 
