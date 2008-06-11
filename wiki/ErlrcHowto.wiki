@@ -120,9 +120,21 @@ Very similar to upgrade, except the treatment of included applications is revers
 
 You can use erlrcdynamic with [http://www.erlang.org/doc/man/appup.html appup files] you have generated yourself.  However we quickly noticed that in most cases appup files could be automatically generating by inspecting the source at upgrade (downgrade) time.  We therefore included automation of most of the common cases outlined in the [http://www.erlang.org/doc/design_principles/appup_cookbook.html appup cookbook].
 
-Here's an outline of the logic followed.  It should be noted that this logic is executed at the point in the package installation process where both the old and new code are installed on disk, so that both can be inspected.
+Here's an outline of the logic followed for upgrade.  It should be noted that this logic is executed at the point in the package installation process where both the old and new code are installed on disk, so that both can be inspected.
 
+ 1. Computed added and removed modules by looking at the old and new OTP app files.
+ 1. Emit a load_module directive for every added module.
+ 1. For each module is in both versions of the application:
+   1. If the module implements the supervisor behaviour
+     1. Emit an "upgrade for supervisors" instruction.
+     1. If the module exports a sup_upgrade_notify/2 function, emit an instruction to call it.
+   1. Else if the module exports a code_change/3 function, emit a update directive for that module.
+   1. Otherwise, emit a load_module directive for that module.
+ 1. If there is a start module for the application:
+   1. Determine if the new beam for the start module exports a version_change/2 function.  If so, emit a directive to call it.
+ 1. Emit a delete_module directive for every removed module.
 
+The logic for downgrade is similar.
 
 = Footnotes =
 
