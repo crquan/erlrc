@@ -143,7 +143,11 @@ We added some special hooks to make automatic appup file generation more compreh
 
 === sup_upgrade_notify/2 ===
 
- The first is a sup_upgrade_notify/2 hook.  If you export such a function in your supervisor modules, it will be called whenever the supervisor is upgraded, with the arguments OldVsn (old version) and NewVsn (new version).  You can use this to start or stop any added or removed children from the supervisor, since (as indicated in the appup cookbook) the supervisor upgrade instruction does not start or stop children.  Note your supervisor will have to be a registered process for this hook to be useful.
+If you export sup_upgrade_notify/2 in your supervisor modules, it will be called whenever the supervisor is upgraded, with the arguments !OldVsn (old version) and !NewVsn (new version).  You can use this to start or stop any added or removed children from the supervisor, since (as indicated in the appup cookbook) the supervisor upgrade instruction does not start or stop children.  Note your supervisor will have to be a registered process for this hook to be useful.
+
+=== version_change/2 ===
+
+If you export version_change/2 in your start modules, it will be called whenever the application is upgraded, with the arguments From (old version) and StartArgs (verbatim from the new OTP application file).  This can be used, e.g., to change application variables.
 
 = Footnotes =
 
