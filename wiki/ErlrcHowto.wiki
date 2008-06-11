@@ -1,4 +1,5 @@
 #summary An explanation of erlrc
+#labels Featured
 
 = Introduction =
 
