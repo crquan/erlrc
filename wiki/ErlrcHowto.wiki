@@ -92,6 +92,10 @@ Therefore, for applications {{{X}}} and {{{Y}}} both listed in $ERLRC_ROOT/appli
   * if {{{Y}}} is upgraded or downgraded such that {{{X}}} becomes no longer included when it was previously, after {{{Y}}} is upgraded or downgraded, {{{X}}} is started.
 
 We've found these rules work for us in the few cases we've used included applications.
+ 
+== Automatic .appup file generation ==
+
+You can use erlrcdynamic with [http://www.erlang.org/doc/man/appup.html appup files] you have generated yourself.  However we quickly noticed that in most cases appup files could be automatically generating by inspecting the source at upgrade (downgrade) time.  We therefore included automation of most of the common cases outlined in the [http://www.erlang.org/doc/design_principles/appup_cookbook.html appup cookbook].
 
 = Footnotes =
 
