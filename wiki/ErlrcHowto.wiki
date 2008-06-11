@@ -101,7 +101,7 @@ Here's a complete flow of the logic:
  1. Ensure all modules listed in the old application specification are loaded.
  1. Find any added and removed included applications by examining the old and new OTP app files.  
  1. Stop any newly included applications.
- 1. Execute release_handler:eval_appup_script
+ 1. Execute release_handler:eval_appup_script/4 .
  1. Start any formerly included applications, if they are listed in $ERLRC_ROOT/applications.
 
 === Downgrade Logic ===
@@ -112,7 +112,7 @@ Very similar to upgrade, except the treatment of included applications is revers
  1. Ensure all modules listed in the old application specification are loaded.
  1. Find any added and removed included applications by examining the old and new OTP app files.  
  1. Stop any removed included applications (they will be included by the version being downgraded to).
- 1. Execute release_handler:eval_appup_script
+ 1. Execute release_handler:eval_appup_script/4 .
  1. Start any added included applications (they are no longer included after the downgrade), if they are listed in $ERLRC_ROOT/applications.
 
 == Automatic .appup file generation ==
