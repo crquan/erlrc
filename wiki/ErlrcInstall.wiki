@@ -1,5 +1,5 @@
 ﻿#summary Install howto for erlrc
-#labels Phase-Deploy
+#labels Phase-Deploy,Featured
 
 = Introduction =
 
