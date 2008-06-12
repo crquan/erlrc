@@ -129,7 +129,7 @@ Here's a complete flow of the logic:
 Very similar to upgrade, except the treatment of included applications is reversed.
 
  1. If there is an appup file in the new application version, use it; otherwise, generate one automatically.
- 1. Ensure all modules listed in the old application specification are loaded.
+ 1. Ensure all modules listed in the new application specification are loaded.
  1. Find any added and removed included applications by examining the old and new OTP app files.  
  1. Stop any removed included applications (they will be included by the version being downgraded to).
  1. Execute release_handler:eval_appup_script/4 .
