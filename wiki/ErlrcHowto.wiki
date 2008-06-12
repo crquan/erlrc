@@ -167,7 +167,7 @@ If you export sup_upgrade_notify/2 in your supervisor modules, it will be called
 
 === version_change/2 ===
 
-If you export version_change/2 in your start modules, it will be called whenever the application is upgraded, with the arguments From (old version) and StartArgs (verbatim from the new OTP application file).  This can be used, e.g., to change application variables.
+If you export version_change/2 in your start modules, it will be called whenever the application is upgraded, with the arguments From (old version) and !StartArgs (verbatim from the new OTP application file).  
 
 = Footnotes =
 
