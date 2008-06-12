@@ -145,7 +145,7 @@ Here's an outline of the logic followed for generating the upgrade portion of th
 
  1. Compute added and removed modules by looking at the old and new OTP app files.
  1. Emit a load_module directive for every added module.
- 1. For each module is in both versions of the application:
+ 1. For each module which is in both versions of the application:
    1. If the module implements the supervisor behaviour
      1. Emit an "upgrade for supervisors" instruction.
      1. If the module exports a sup_upgrade_notify/2 function, emit an instruction to call it.
