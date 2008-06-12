@@ -34,7 +34,7 @@ Basically, on the running Erlang node on my machine, the Erlang application eger
 If you want your packages to start leveraging erlrc, then:
 
  1. Install erlrc into your system.
- 1. Ensure that $ERLRC_ROOT/nodes contains a file with your node name and cookie in it.
+ 1. Ensure that $ERLRC_ROOT/nodes contains a file with your node name and cookie in it.  $ERLRC_ROOT defaults to /etc/erlrc.d .
  1. Start your erlang nodes with the command line flag {{{-s erlrc_boot boot}}}.
 
 Now your Erlang runtime is ready.  For your packages either:
