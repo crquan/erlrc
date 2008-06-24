@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This page will assist you in installing erlrc.[[#3 3]]
+This page will assist you in installing erlrc.[[#2 2]]
 
 Prerequisites:
   1. gnu make
