@@ -41,7 +41,7 @@ Now your Erlang runtime is ready.  For your packages either:
  1. Use [http://code.google.com/p/fwtemplates/wiki/FwTemplateErlangWalkthrough fw-template-erlang]
  1. For debian:
    1. Add an empty file named the same as your application installed into $ERLRC_ROOT/applications .
-   1. Add postrm, postinst, and prerm hooks to your debian packages following the examples:
+   1. Add postrm, postinst, and prerm hooks to your debian packages following the examples:[[#5 5]]
    * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst example.postinst]
    * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
    * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
@@ -186,3 +186,7 @@ I'm not going to show you the cookie, but it's basically {{{ cookie=`cat /etc/er
 == 4 ==
 
 Adjust as appropriate for your OS package manager if not using a dpkg-based system.
+
+== 5 ==
+
+Best practice is to have your build system generate these hooks automatically when the package is made, to avoid human error.
