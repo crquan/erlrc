@@ -3,6 +3,8 @@
 
 = Introduction =
 
+Do NOT attempt to build from a checkout from the source code repository: that is for wizards only. Instead, grab one of the released source tarballs from the [http://code.google.com/p/erlrc/downloads/list downloads] tab.
+
 This page will assist you in installing erlrc.[[#2 2]]
 
 Prerequisites:
