@@ -14,8 +14,7 @@ Prerequisites:
      * os/x (with [http://www.finkproject.org/ fink]): apt-get install erlang-otp
      * freebsd: pkg_add -r erlang
      * others: ???
-  1. [http://support.process-one.net/doc/display/CONTRIBS/EUnit eunit] from proc
-ess one; optional but 'make check' will not do anything without it.
+  1. [http://support.process-one.net/doc/display/CONTRIBS/EUnit eunit] from process one; optional but 'make check' will not do anything without it.
 
 Go to the [http://code.google.com/p/erlrc/downloads/list?can=2&q=*.tar.gz&colspec=Filename+Summary+Uploaded+Size+DownloadCount downloads section] and grab the latest {{{.tar.gz}}} file.
 
