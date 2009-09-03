@@ -165,6 +165,28 @@ We added some special hooks to make automatic appup file generation more compreh
 
 If you export sup_upgrade_notify/2 in your supervisor modules, it will be called whenever the supervisor is upgraded, with the arguments !OldVsn (old version) and !NewVsn (new version).  You can use this to start or stop any added or removed children from the supervisor, since (as indicated in the appup cookbook) the supervisor upgrade instruction does not start or stop children.  Note your supervisor will have to be a registered process for this hook to be useful.
 
+Here is a generic sup_upgrade_notify/2 that will probably work for you.
+{{{
+sup_upgrade_notify (_Old, _New) ->
+  { ok, { _, Specs } } = init ([]),
+
+  Old = sets:from_list (
+          [ Name || { Name, _, _, _ } <- supervisor:which_children (?MODULE) ]),
+  New = sets:from_list ([ Name || { Name, _, _, _, _, _ } <- Specs ]),
+  Kill = sets:subtract (Old, New),
+
+  sets:fold (fun (Id, ok) ->
+               supervisor:terminate_child (?MODULE, Id),
+               supervisor:delete_child (?MODULE, Id),
+               ok
+             end,
+             ok,
+             Kill),
+
+  [ supervisor:start_child (?MODULE, Spec) || Spec <- Specs ],
+  ok.
+}}}
+
 === version_change/2 ===
 
 If you export version_change/2 in your start modules, it will be called whenever the application is upgraded, with the arguments From (old version) and !StartArgs (verbatim from the new OTP application file).  
