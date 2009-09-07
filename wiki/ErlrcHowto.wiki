@@ -157,6 +157,10 @@ Here's an outline of the logic followed for generating the upgrade portion of th
 
 The logic for computing the downgrade portion of the appup file is similar but reversed.
 
+=== Offline Generation ===
+
+By request, we have isolated the appup generation logic into an escript called [http://code.google.com/p/erlrc/source/browse/trunk/erlrc/src/erlrc-makeappup erlrc-makeappup].  You can invoke this script in order to generate an appup file anywhere you have the old and new versions of your software simultaneously installed.  This can be useful if you want automatic appup generation but don't want to employ erlrc at launch-time.
+
 == Speciality Hooks ==
 
 We added some special hooks to make automatic appup file generation more comprehensive. 
