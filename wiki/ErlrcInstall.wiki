@@ -50,6 +50,10 @@ If not, the test output for {{{test-FOO}}} is in {{{tests/test-FOO.out}}}; perha
 
 Now you can {{{make install}}}.
 
+= Next Steps =
+
+Check out ErlrcHowto
+
 = Footnotes =
 
 == 1 ==
