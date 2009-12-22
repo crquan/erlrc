@@ -29,6 +29,15 @@ erlrc-start: Starting 'egerl': (cb8eec1a1b85ec017517d3e51c5aee7b) already_runnin
 }}}
 Basically, on the running Erlang node on my machine, the Erlang application egerl was hot-code upgraded from 4.0.1 to 4.1.0 when the package was installed.  If this were an initial install, it would have started the application instead.  The OS package manager takes care of dependencies and you end up managing Erlang the way you manage everything else.[[#1 1]] 
 
+Perhaps you would prefer another flavor?
+{{{
+% sudo yum -q -y install lyet
+erlrc-start: Starting 'lyet': (erlang) started
+7% sudo yum -q -y remove lyet
+erlrc-stop: Stopping 'lyet': (erlang) unloaded
+}}}
+erlrc uses shell scripts as its interface so integration with any package manager should be feasible.
+
 = Quick Start =
 
 If you want your packages to start leveraging erlrc, then:
