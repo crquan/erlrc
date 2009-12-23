@@ -51,10 +51,10 @@ Now your Erlang runtime is ready.  For your packages either:
    * works with rpm and debian
  1. For debian:
    1. Add an empty file named the same as your application installed into $ERLRC_ROOT/applications .
-   1. Add postrm, postinst, and prerm hooks to your debian packages following the examples:[[#5 5]]
-   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst example.postinst]
-   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
-   * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
+   1. Add postrm, postinst, and prerm hooks to your debian packages.
+    * pre-remove should invoke erlrc-stop if the package is being removed.
+    * post-remove should invoke erlrc-upgrade if the package is being upgraded.
+    * post-install should invoke erlrc-start if the package is being configured.
  1. For rpm:
    1. Add an empty file named the same as your application installed into $ERLRC_ROOT/applications .
    1. Add %preun, and %posttrans hooks to your rpm packages.
