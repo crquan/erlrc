@@ -35,7 +35,7 @@ Perhaps you would prefer another flavor?
 {{{
 % sudo yum -q -y install lyet
 erlrc-start: Starting 'lyet': (erlang) started
-7% sudo yum -q -y remove lyet
+% sudo yum -q -y remove lyet
 erlrc-stop: Stopping 'lyet': (erlang) unloaded
 }}}
 erlrc uses shell scripts as its interface so integration with any package manager should be feasible.
