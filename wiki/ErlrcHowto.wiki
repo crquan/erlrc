@@ -1,6 +1,8 @@
 #summary An explanation of erlrc
 #labels Featured
 
+<wiki:toc max_depth="2" />
+
 = Introduction =
 
 One of Erlang's strengths is hot code loading, the ability to change the software on the system without interrupting service.  For internet applications this is especially powerful.
@@ -208,22 +210,22 @@ If you export version_change/2 in your start modules, it will be called whenever
 
 = Footnotes =
 
-== 1 ==
+=== 1 ===
 
 If you have circular dependencies then you will have transients in your system when things aren't working while the installs happen.  We think (but are not sure) that the release handler has problems too, since the low-level primitives can only atomically upgrade one module at a time.  However maybe we're wrong about that.  In practice, we haven't have circular dependencies.
 
-== 2 ==
+=== 2 ===
 
 There are two concepts of dependency here.  The first is an OS package manager dependency, the second is the OTP application specification dependency.  erlrcdynamic uses the former (implicitly, since it gets invoked by the OS package manager), and erlrc_boot uses the latter.  You have to arrange for both types of dependencies to be correct.
 
-== 3 ==
+=== 3 ===
 
 I'm not going to show you the cookie, but it's basically {{{ cookie=`cat /etc/erlrc.d/nodes/cb8eec1a1b85ec017517d3e51c5aee7b` }}}.
 
-== 4 ==
+=== 4 ===
 
-Adjust as appropriate for your OS package manager if not using a dpkg-based system.
+Adjust as appropriate for your OS package manager if not using a dpkg or rpm based system ... and email me the result!
 
-== 5 ==
+=== 5 ===
 
 Best practice is to have your build system generate these hooks automatically when the package is made, to avoid human error.
