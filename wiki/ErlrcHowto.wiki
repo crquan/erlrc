@@ -61,6 +61,7 @@ Now your Erlang runtime is ready.  For your packages either:
     * %preun should invoke erlrc-stop if the installation count indicates removal.
     * %preun should invoke erlrc-upgrade if the installation count indicates upgrade.
     * %posttrans should invoke erlrc-start.
+    * you'll need to figure out the currently installed version number to invoke the shell scripts.  i grab the currently installed version with an {{{rpm -q}}} in a %pretrans hook and write it to TMPDIR.  
  1. For others 
    1. You'll have to adapt the examples.  If you come up with something, let me know and I'll add it here.
 
@@ -100,19 +101,13 @@ We use md5sums to generate node names at our company, hence the funny node name.
 
 Here's a table of the shell scripts, their corresponding methods in erlrcdynamic, a brief description of what they do, and what phase in the [http://www.debian.org/doc/debian-policy/ch-maintainerscripts.html debian package installation procedure] it should be invoked.[[#4 4]]
 
-|| shell script || erlrcdynamic method || what || when (debian) ||
-|| erlrc-start || start || starts an application (idempotent) || _postinst_ configure ; _postinst_ abort-remove ||
-|| erlrc-stop || stop || stops an application (idempotent) || _prerm_ remove ||
-|| erlrc-upgrade || upgrade || upgrades an application || _postinst_ upgrade ||  
-|| erlrc-downgrade || downgrade || downgrades an application || _postinst_ abort_upgrade ||
+|| shell script || erlrcdynamic method || what || when (debian) || when (rpm) || 
+|| erlrc-start || start || starts an application (idempotent) || _postinst_ configure ; _postinst_ abort-remove || %posttrans ||
+|| erlrc-stop || stop || stops an application (idempotent) || _prerm_ remove || %preun (installation count == 0) ||
+|| erlrc-upgrade || upgrade || upgrades an application || _postinst_ upgrade ||  %preun (installation count > 0) ||
+|| erlrc-downgrade || downgrade || downgrades an application || _postinst_ abort_upgrade || n/a ||
 
 If you use [http://code.google.com/p/fwtemplates framewerk] package hooks are created for you automatically by [http://code.google.com/p/fwtemplates/wiki/FwTemplateErlangWalkthrough fw-template-erlang], and these hooks are inert unless erlrc is installed (which is automatically listed as a recommended package).
-
-For everyone else, here are some examples of what your package hooks should look like:
-
-  * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postinst example.postinst]
-  * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.postrm example.postrm]
-  * [http://code.google.com/p/erlrc/source/browse/trunk/doc/example.prerm example.prerm]
 
 Finally, a note on [http://www.erlang.org/doc/design_principles/included_applications.html included applications].  erlrc tries to "do the right thing" with included applications.  This is interpreted as:
 
