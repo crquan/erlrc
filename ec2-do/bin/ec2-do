@@ -58,7 +58,10 @@
                    use_hostcache = false,
                    hostcache = undefined,
                    hostcache_ttl = 86400,
-                   tenacious = false }).
+                   tenacious = false,
+                   access_key_id = undefined,
+                   secret_access_key = undefined,
+                   user = "root" }).
 
 -record(spawner, { num_procs, max_procs, tenacious, stop = false }).
 
@@ -200,11 +203,27 @@ hosts_to_file(Hosts,Filename) ->
 ec2_describe_instances() -> 
   #xmlNamespace{} = #xmlNamespace{},
 
-  { ok, AccessKeyIdBin } = file:read_file ("/usr/share/n54/access-key-id"),
-  { ok, SecretAccessKeyBin } = 
-    file:read_file ("/usr/share/n54/secret-access-key"),
-  Keys = aws_keys:new (binary_to_list (AccessKeyIdBin),
-                       binary_to_list (SecretAccessKeyBin)),
+  case get (access_key_id) of
+    undefined ->
+      port_command (open_port ({ fd, 0, 2 }, [ out ]),
+                    "error: access_key_id (-a) not specified\n"),
+      timer:sleep (10),
+      exit (no_access_key_id);
+    _ ->
+      ok
+  end,
+
+  case get (secret_access_key) of
+    undefined ->
+      port_command (open_port ({ fd, 0, 2 }, [ out ]),
+                    "error: secret_access_key (-s) not specified\n"),
+      timer:sleep (10),
+      exit (no_secret_access_key);
+    _ ->
+      ok
+  end,
+
+  Keys = aws_keys:new (get (access_key_id), get (secret_access_key)),
   { { "HTTP/1.1", 200, "OK" }, 
     _Headers, 
     Body } = aws_instance:describe_all (Keys),
@@ -310,8 +329,9 @@ dome_loop (Host, Conf, Port) ->
 
 start_port (Host, #config{ max_line = MaxL, 
                            batch_mode = Batch,
-                           expert = Expert }) ->
-  Prefix = if not Expert -> "ssh root@$EC2_HOST -- "; true -> "" end,
+                           expert = Expert,
+                           user = User }) ->
+  Prefix = if not Expert -> "ssh " ++ User ++ "@$EC2_HOST -- "; true -> "" end,
   open_port ({ spawn, Prefix ++ "sh -s ec2-do:cmd" }, 
              [ stream,
                case Batch of
@@ -441,6 +461,10 @@ detailed_summary (Stderr, [ { { internal_error, Error }, Host } | Rest ]) ->
 
 parse_args ([ "--" | More ], Conf) -> 
   { Conf, More };
+parse_args ([ "-a", AccessKeyId | More ], Conf) ->
+  % cheesy: but too lazy to thread this through
+  put (access_key_id, AccessKeyId),
+  parse_args (More, Conf#config{ access_key_id = AccessKeyId });
 parse_args ([ "-g", Group | More ], Conf) ->
   parse_args (More, Conf#config{ ec2_group = [ Group | Conf#config.ec2_group ] });
 parse_args ([ "-b" | More ], Conf) ->
@@ -468,8 +492,14 @@ parse_args ([ "-l", Line | More ], Conf) ->
   parse_args (More, Conf#config{ max_line = MaxLine });
 parse_args ([ "-q" | More ], Conf) ->
   parse_args (More, Conf#config{ quiet = true });
+parse_args ([ "-s", SecretAccessKey | More ], Conf) ->
+  % cheesy: but too lazy to thread this through
+  put (secret_access_key, SecretAccessKey),
+  parse_args (More, Conf#config{ secret_access_key = SecretAccessKey });
 parse_args ([ "-t" | More ], Conf) ->
   parse_args (More, Conf#config{ tenacious = true });
+parse_args ([ "-u", User | More ], Conf) ->
+  parse_args (More, Conf#config{ user = User });
 parse_args ([ "-v" | More ], Conf) ->
   parse_args (More, Conf#config{ verbose = true });
 parse_args ([ "-x" | More ], Conf) ->
@@ -551,6 +581,8 @@ usage () ->
                 "options is zero or more of \n" ++
                 "  --\n" ++
                 "    treat the rest of the command line literally\n" ++
+                "  -a accesskey\n" ++
+                "    specify EC2 AWS access key id\n" ++
                 "  -b\n" ++
                 "    batch mode: output from host is displayed\n" ++ 
                 "                after host command exits\n" ++
@@ -579,8 +611,12 @@ usage () ->
                 "  -q\n" ++
                 "    quiet mode: output from commands is not displayed\n" ++
                 "                (default: no)\n" ++
+                "  -s secretkey\n" ++
+                "    specify EC2 AWS secret key\n" ++
                 "  -t tenacious mode\n" ++
                 "    continue even if errors are encountered (default: no)\n" ++
+                "  -u username\n" ++
+                "    use username for login to remote box\n" ++
                 "  -v verbose mode\n" ++
                 "    show commands being executed (default: no)\n" ++
                 "  -x expert mode\n" ++
